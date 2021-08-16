@@ -1,0 +1,13 @@
+1.How to use imagesInEinsteinBot in Messaging (WhatsApp)
+IMAGE:<IMAGE_URL>
+Put your image URL in <IMAGE URL> and add on message options
+
+2.Getting data from external source for a einstein bot quey
+Simply we can add Dialog Indent in our particular dialog which we have wanted to a external 
+messages.
+
+3.How to embed any link in one word in einstein bot
+RICH_TEXT:<a href="https://www.supportmycloud.com/resources">Blogs</a>
+
+4.Email alert when case created by einstein chat bot.
+We can use Action type Email so that we can send email to our User.

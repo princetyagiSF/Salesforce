@@ -1,0 +1,31 @@
+public with Sharing Class CreateCase{
+     public class CreateCaseInput{
+        @InvocableVariable(required= true)
+        public String Subject ;
+        
+        @InvocableVariable(required= true)
+        public String Description ;
+       
+    }
+    @InvocableMethod(Label ='Get Case' description='return temp')
+    public static List<String> getCase(List<CreateCaseInput> input)
+    {
+        List<Case> newCaseList = new List<Case>();
+        for(CreateCaseInput Chat  : input){
+            Case csObj = new Case();
+            csObj.Subject = Chat.Subject;
+            csObj.Description = Chat.Description;
+            csObj.Status = 'New';
+            csObj.Origin = 'Web';
+            newCaseList.add(csObj);
+        }
+        insert newCaseList;
+        //system.debug(newCaseList);
+        List<String>  newCaseList2 = new List<String>();
+        for(Case csLoop : newCaseList){
+           String caseNum = [SELECT CaseNumber FROM Case WHERE Id = :csLoop.Id].CaseNumber;
+            newCaseList2.add('Your Case Number is: '+caseNum+'. Your Case Status is: '+csLoop.Status);
+        }
+        return newCaseList2;   
+    }
+}

@@ -1,0 +1,50 @@
+public class NewPriceBook {
+    public static void newPriceBook(Integer noOfProduct){
+        try{
+            PriceBook2 priceBookNew = new PriceBook2(Name='Test PriceBook',IsActive=True,Description='For Testing');
+            insert priceBookNew;
+            system.debug(priceBookNew);
+            priceBookNew = [Select id from pricebook2 where name like '%Test PriceBook%' limit 1];
+            List<Product2> proList = new List<Product2>();
+            for(integer i=0;i<noOfProduct;i++){
+                Product2 proObj = new Product2();
+                proObj.Name = 'Test Product'+i;
+                proObj.IsActive = True;
+                proObj.ProductCode = '1'+i;
+                proList.add(proObj);
+            }
+            if(!proList.isEmpty()){
+                insert proList;
+                system.debug(proList);
+            }            
+            proList = [Select id from Product2 where name like '%Test Product%' and IsActive = True limit 10];
+			
+            List<PricebookEntry> pricebookEntryList = new List<PriceBookEntry>();
+            PriceBook2 stdPriceBook= [Select id from PriceBook2 where IsStandard = True limit 1];
+            for(Product2 pro : proList){
+                PriceBookEntry pbe = new PriceBookEntry();
+                pbe.Product2Id = pro.id;
+                pbe.Pricebook2Id = stdPriceBook.id;
+                pbe.IsActive = True;
+                pbe.UnitPrice = 10000;
+                pricebookEntryList.add(pbe);
+            }
+            insert pricebookEntryList;
+            
+            for(Product2 pro: proList){
+                PriceBookEntry pbe = new PriceBookEntry();
+                pbe.Product2Id = pro.Id;
+                pbe.Pricebook2Id = priceBookNew.Id;
+                pbe.IsActive = True;
+                pbe.UnitPrice = 10;
+				pricebookEntryList.add(pbe);                
+            }
+            upsert pricebookEntryList;
+            system.debug(pricebookEntryList);
+        }
+        catch(Exception exe){
+            system.debug('Exception Line-->'+exe.getLineNumber());
+            system.debug('Exception Message-->'+exe.getMessage());
+        }
+    }
+}

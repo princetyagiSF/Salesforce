@@ -1,0 +1,21 @@
+﻿public class TaskEmail {
+    public static void testEmail(){
+        try{
+            list<Messaging.SingleEmailMessage> mlist =new List<Messaging.SingleEmailMessage>(); 
+            String [] Addresses=new String[]{'prince.tyagi@miritech.com','mansi.tyagi@miritech.com','xyz@gmail.com','abc@gmail.com'}; 
+            Messaging.SingleEmailMessage email=new Messaging.SingleEmailMessage();
+            email.setSubject('Testing Email');
+            email.setPlainTextBody('Welcome');
+            email.SetToaddresses(addresses);
+            mlist.add(email);
+            if(!mlist.isEmpty()){
+                Messaging.sendEmail(mlist);
+                //system.debug(mlist);
+            }
+        }
+        catch(Exception exe){
+            system.debug('Exception in Line'+exe.getLineNumber());
+            system.debug('Exception in Message'+exe.getMessage());
+        }
+    }
+}
